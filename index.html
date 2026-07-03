@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Acrophobia Deluxe</title>
+<style>
+:root{
+  --bg:#070b12;
+  --panel:#101827;
+  --panel2:#172235;
+  --text:#f4f7ff;
+  --muted:#9aa8c0;
+  --green:#6cff8d;
+  --yellow:#ffe66d;
+  --pink:#ff5bd6;
+  --cyan:#55dfff;
+  --red:#ff6262;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:radial-gradient(circle at top,#18233b 0,#070b12 55%);
+  color:var(--text);
+  min-height:100vh;
+}
+.wrap{max-width:980px;margin:0 auto;padding:18px}
+.header{
+  text-align:center;
+  padding:20px 10px 10px;
+}
+.logo{
+  font-size:44px;
+  letter-spacing:2px;
+  font-weight:900;
+  color:var(--green);
+  text-shadow:0 0 12px rgba(108,255,141,.8),0 0 30px rgba(85,223,255,.35);
+}
+.tag{color:var(--muted);font-size:15px;margin-top:4px}
+.card{
+  background:linear-gradient(180deg,rgba(23,34,53,.96),rgba(13,20,33,.96));
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:18px;
+  padding:18px;
+  margin:14px 0;
+  box-shadow:0 16px 36px rgba(0,0,0,.35);
+}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.row{grid-template-columns:1fr}.logo{font-size:34px}}
+label{display:block;color:var(--muted);font-weight:700;margin:8px 0 5px}
+input,select,textarea{
+  width:100%;
+  border:1px solid rgba(255,255,255,.14);
+  background:#07101d;
+  color:var(--text);
+  border-radius:12px;
+  padding:12px;
+  font-size:16px;
+}
+textarea{min-height:92px;resize:vertical}
+button{
+  border:0;
+  border-radius:999px;
+  padding:12px 18px;
+  font-weight:800;
+  font-size:15px;
+  cursor:pointer;
+  margin:5px 4px 5px 0;
+  color:#061018;
+  background:var(--green);
+  box-shadow:0 0 14px rgba(108,255,141,.25);
+}
+button.secondary{background:var(--cyan)}
+button.warn{background:var(--yellow)}
+button.danger{background:var(--red);color:white}
+button.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2);box-shadow:none}
+button:disabled{opacity:.45;cursor:not-allowed}
+.hidden{display:none!important}
+.acroBox{text-align:center;padding:24px 8px}
+.acro{
+  font-size:68px;
+  font-weight:900;
+  letter-spacing:14px;
+  color:var(--yellow);
+  text-shadow:0 0 14px rgba(255,230,109,.75),0 0 30px rgba(255,91,214,.25);
+  line-height:1.1;
+  overflow-wrap:anywhere;
+}
+.categoryBadge{
+  display:inline-block;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  color:var(--cyan);
+  padding:6px 12px;
+  margin-bottom:12px;
+  background:rgba(85,223,255,.08);
+  font-weight:800;
+}
+.timer{
+  font-size:34px;
+  font-weight:900;
+  color:var(--green);
+  text-align:center;
+}
+.timer.low{color:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{50%{transform:scale(1.05);opacity:.72}}
+.pass{
+  text-align:center;
+  border:2px dashed rgba(108,255,141,.35);
+  background:rgba(108,255,141,.05);
+}
+.bigName{font-size:34px;font-weight:900;color:var(--green)}
+.answerCard{
+  padding:13px;
+  border:1px solid rgba(255,255,255,.14);
+  background:#0a1322;
+  border-radius:14px;
+  margin:9px 0;
+}
+.answerText{font-size:18px;font-weight:800}
+.small{font-size:13px;color:var(--muted)}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th,.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.1);text-align:left}
+.table th{color:var(--cyan)}
+.winnerSplash{
+  text-align:center;
+  border:2px solid rgba(255,230,109,.45);
+  background:linear-gradient(135deg,rgba(255,230,109,.12),rgba(255,91,214,.1));
+}
+.winnerQuote{
+  font-size:26px;
+  font-weight:900;
+  color:var(--yellow);
+  margin:12px 0;
+}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:700px){.grid3{grid-template-columns:1fr}}
+.stat{background:#0a1322;border-radius:14px;padding:12px;border:1px solid rgba(255,255,255,.1)}
+.stat b{display:block;color:var(--yellow);font-size:22px}
+.notice{color:var(--yellow);font-weight:800}
+.validationBox{
+  margin-top:12px;
+  background:#08111f;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:12px;
+}
+.validationRow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:5px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.validationRow:last-child{border-bottom:0}
+.validationLetter{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  background:#16243a;
+}
+.validationRow.good .validationLetter{background:rgba(108,255,141,.18);color:var(--green)}
+.validationRow.bad .validationLetter{background:rgba(255,98,98,.18);color:var(--red)}
+.validationWord{font-weight:800}
+.validationHint{color:var(--muted);font-size:13px}
+.validStatus{margin-top:10px;font-weight:900}
+.validStatus.good{color:var(--green)}
+.validStatus.bad{color:var(--red)}
+
+.footerActions{display:flex;flex-wrap:wrap;gap:6px}
+.playerSetupGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:700px){.playerSetupGrid{grid-template-columns:1fr}}
+.playerBox{
+  background:#0a1322;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:10px;
+}
+.playerBox label{margin-top:0;color:var(--green)}
+
+.revealStage{
+  text-align:center;
+  padding:20px;
+}
+.revealBig{
+  font-size:42px;
+  font-weight:900;
+  color:var(--yellow);
+  margin:20px 0;
+}
+
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="logo">ACROPHOBIA DELUXE</div>
+    <div class="tag">A pass-the-device acronym party game</div>
+  </div>
+
+  <div id="app"></div>
+</div>
+
+<script>
+let state = {};
+let tickHandle = null;
+
+const categoryPacks = {
+  General:["FBI","LOL","OMG","BRB","TBD","ASAP","DIY","VIP","BFF","DMV","ATM","BBQ","UFO","CEO","MVP","GOAT","WTF","FYI","SOS","RSVP"],
+  Sports:["MVP","GOAT","DNF","MLB","NFL","NBA","NHL","UFC","ESPN","VAR","RBI","ERA","OPS","PPR","BMX","KBO","WBC","NCAA"],
+  NASCAR:["DNF","SVG","HMS","JGR","RCR","RFK","LFG","NASCAR","PIT","BUSCH","DRAFT","GREEN","CAUTION","TALLADEGA"],
+  MLB:["MLB","RBI","ERA","OPS","WAR","NLDS","ALCS","METS","CUBS","AIDS","DODGERS","YANKEES","BULLPEN","WALKOFF"],
+  Movies:["CGI","DVD","HBO","AMC","IMAX","SAG","OSCARS","TRAILER","SEQUEL","VILLAIN","ROMCOM"],
+  Reddit:["AMA","TIL","AITA","ELI5","NSFW","OP","MOD","KARMA","THREAD","UPVOTE","DOWNVOTE"],
+  Lawyers:["DDA","DA","PD","PC","VC","CVC","EVID","JURY","TRIAL","HEARSAY","OBJECTION","WARRANT"],
+  Chaos:[]
+};
+
+const weightedLetters = "AAAAABCDEEEEEFGHIIIIKLLLMMNNNOOOOPRRRSSSSTTTTUUVWY";
+
+const comments = [
+  "The voters have spoken, and apparently they like nonsense with confidence.",
+  "That one had dangerous levels of Yahoo Games energy.",
+  "A deeply unserious answer. Naturally, it won.",
+  "That answer came out swinging.",
+  "The room chose chaos, and honestly, fair.",
+  "Somewhere, the original Acrophobia lobby is proud.",
+  "That answer was either brilliant or stupid. The line is thin.",
+  "A strong showing from the department of bad ideas."
+];
+
+function $(id){return document.getElementById(id);}
+function save(){localStorage.setItem("acroDeluxeSave", JSON.stringify(state));}
+function load(){
+  const raw = localStorage.getItem("acroDeluxeSave");
+  if(!raw){alert("No saved game found.");return;}
+  state = JSON.parse(raw);
+  render();
+}
+function clearSave(){
+  localStorage.removeItem("acroDeluxeSave");
+  state = {};
+  renderSetup();
+}
+function beep(type="normal"){
+  if(!state.sound) return;
+  try{
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = "square";
+    o.frequency.value = type==="win"?740:type==="low"?180:420;
+    g.gain.value = .045;
+    o.start();
+    setTimeout(()=>{o.stop();ctx.close();}, type==="win"?180:90);
+  }catch(e){}
+}
+
+function renderSetup(){
+  stopTimer();
+  $("app").innerHTML = `
+    <div class="card">
+      <h2>New Game</h2>
+      <div class="row">
+        <div>
+          <label>Human Players</label>
+          <select id="playerCount" onchange="renderPlayerBoxes()">
+            <option>2</option>
+            <option>3</option>
+            <option selected>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+          </select>
+          <div id="playerBoxes" class="playerSetupGrid"></div>
+
+          <label>AI Players</label>
+          <select id="aiCount">
+            <option selected>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+          </select>
+
+          <label>AI Skill</label>
+          <select id="aiSkill">
+            <option>Easy</option>
+            <option selected>Normal</option>
+            <option>Chaos</option>
+          </select>
+        </div>
+        <div>
+          <label>Rounds</label>
+          <select id="rounds"><option>5</option><option selected>10</option><option>15</option><option>20</option></select>
+          <label>Category Pack</label>
+          <select id="category">
+            ${Object.keys(categoryPacks).map(x=>`<option>${x}</option>`).join("")}
+          </select>
+          <label>Difficulty</label>
+          <select id="difficulty">
+            <option>Easy</option>
+            <option selected>Medium</option>
+            <option>Hard</option>
+            <option>Chaos</option>
+          </select>
+          <label>Submission Timer</label>
+          <select id="seconds">
+            <option value="0">Off</option>
+            <option value="30">30 seconds</option>
+            <option value="45" selected>45 seconds</option>
+            <option value="60">60 seconds</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="startGame()">Start Game</button>
+      <button class="secondary" onclick="load()">Resume Saved Game</button>
+      <button class="ghost" onclick="showHall()">Hall of Fame</button>
+    </div>
+    <div class="card">
+      <h3>Scoring</h3>
+      <p>Every vote is worth <b>1 point</b>. The round winner gets a <b>+2 bonus</b>. If one answer gets every possible vote, it gets a <b>+1 sweep bonus</b>.</p>
+      <p class="small">Players cannot vote for themselves. Answers are anonymous until results.</p>
+    </div>
+  `;
+  renderPlayerBoxes();
+}
+
+function renderPlayerBoxes(){
+  const box = $("playerBoxes");
+  if(!box) return;
+  const count = Number($("playerCount").value || 4);
+  const defaults = ["Chris","Alexis","Bob","Sarah","Player 5","Player 6","Player 7","Player 8"];
+  let h = "";
+  for(let i=1;i<=count;i++){
+    h += `
+      <div class="playerBox">
+        <label>Player ${i}</label>
+        <input id="player${i}" value="${defaults[i-1]}">
+      </div>
+    `;
+  }
+  box.innerHTML = h;
+}
+
+
+const aiNamesPool = ["AcroBot","Captain Acronym","Word Salad","The Intern","Yahoo Veteran","DNF Expert","ObjectionBot","Pit Reporter"];
+
+function buildAIPlayers(count){
+  let out=[];
+  for(let i=0;i<count;i++) out.push(aiNamesPool[i % aiNamesPool.length]);
+  return out;
+}
+
+function isAIPlayer(name){
+  return aiNamesPool.includes(name);
+}
+
+function generateAIAnswer(acro){
+  const letters = acro;
+  return letters.map(l=>{
+    const words={
+      A:["Amazing","Awkward","Angry"],
+      B:["Burrito","Banana","Broken"],
+      C:["Cow","Captain","Confused"],
+      D:["Drivers","Definitely","Denny"],
+      F:["Fuel","Finishing","Friends"],
+      M:["Most","Monkey","Massive"],
+      N:["Need","Never","Nervous"],
+      P:["Player","Pizza","Pit"],
+      R:["Really","Racing","Random"],
+      S:["Super","Speedy","Strange"],
+      T:["Tall","Turbo","Terrible"]
+    };
+    const opts=words[l]||[l+"word"];
+    return opts[Math.floor(Math.random()*opts.length)];
+  }).join(" ");
+}
+
+function startGame(){
+  const count = Number($("playerCount").value);
+  const players = [];
+  for(let i=1;i<=count;i++){
+    const name = $("player"+i).value.trim();
+    if(name) players.push(name);
+  }
+  if(players.length < 2) return alert("Add at least 2 player names.");
+  const aiCount = Number($("aiCount").value);
+  if(players.length + aiCount > 8) return alert("Maximum 8 total players.");
+  const playersFinal = [...players, ...buildAIPlayers(aiCount)];
+  state = {
+    players: playersFinal,
+    scores:Object.fromEntries(playersFinal.map(p=>[p,0])),
+    stats:Object.fromEntries(playersFinal.map(p=>[p,{wins:0,votes:0,sweeps:0}])),
+    round:1,
+    maxRounds:Number($("rounds").value),
+    category:$("category").value,
+    difficulty:$("difficulty").value,
+    seconds:Number($("seconds").value),
+    sound:true,
+    phase:"roundIntro",
+    currentPlayer:0,
+    submissions:[],
+    votes:{},
+    acro:generateAcronym(),
+    timeLeft:Number($("seconds").value),
+    commentary:"",
+    aiSkill:$("aiSkill") ? $("aiSkill").value : "Normal"
+  };
+  save();
+  render();
+}
+
+
+function generateAcronym(){
+  const realPools = {
+    General:["FBI","ATM","CEO","MVP","VIP","DIY","BBQ","UFO","RSVP","SOS","FYI","TBD","OMG","LOL","BFF","DMV","ASAP"],
+    Sports:["DNF","MVP","RBI","ERA","OPS","NFL","NBA","NHL","UFC","NCAA","ESPN","WBC"],
+    NASCAR:["DNF","SVG","HMS","JGR","RFK","CUP","PIT","LUG","FUEL","TIRE","GREEN","CAUTION"],
+    MLB:["RBI","ERA","OPS","WAR","MLB","NLDS","ALCS","MVP","BULLPEN","WALKOFF"],
+    Movies:["CGI","DVD","HBO","AMC","IMAX","OSCARS","SEQUEL","TRAILER"],
+    Reddit:["AMA","TIL","AITA","ELI5","NSFW","MOD","OP","KARMA"],
+    Lawyers:["DDA","DA","PD","PC","VC","DUI","DNA","JURY","TRIAL","WARRANT","GBI","995"],
+    Chaos:[]
+  };
+
+  const roll = Math.random();
+
+  // 60% real acronyms
+  if(roll < 0.60){
+    const pool = realPools[state.category] || realPools.General;
+    const pick = pool[Math.floor(Math.random()*pool.length)];
+    return pick.split("");
+  }
+
+  // 30% pronounceable
+  if(roll < 0.90){
+    const syllables = [
+      "BR","CR","DR","FR","GR","PR","TR",
+      "ST","SP","SK","CL","PL","FL","GL",
+      "RO","RA","RE","RI","NA","NE","NO",
+      "TA","TE","TI","FA","FI","LA","LE",
+      "MA","ME","MO","WO","JU","JE"
+    ];
+    const target = 3 + Math.floor(Math.random()*3);
+    let word = "";
+    while(word.length < target + 1){
+      word += syllables[Math.floor(Math.random()*syllables.length)];
+    }
+    word = word.substring(0,target + Math.floor(Math.random()*2));
+    return word.toUpperCase().replace(/[^A-Z]/g,'').split("");
+  }
+
+  // 10% chaos
+  const chaos = [
+    "XQRT","ZZTOP","QQQQ","FBICIA","NASCARLOL",
+    "ZXCV","QWERT","XXXL","WUT","BRUH"
+  ];
+  return chaos[Math.floor(Math.random()*chaos.length)].split("");
+}
+
+
+function render(){
+  stopTimer();
+  if(!state.phase){renderSetup();return}
+  let h = topBar();
+
+  if(state.phase==="roundIntro") h += roundIntro();
+  if(state.phase==="submitPass") h += submitPass();
+  if(state.phase==="submit") h += submitScreen();
+  if(state.phase==="votePass") h += votePass();
+  if(state.phase==="vote") h += voteScreen();
+  if(state.phase==="reveal") h += revealScreen();
+  if(state.phase==="results") h += resultsScreen();
+  if(state.phase==="scoreboard") h += scoreboardScreen();
+  if(state.phase==="gameover") h += gameOverScreen();
+
+  $("app").innerHTML = h;
+  save();
+
+  if(state.phase==="submit"){
+    updateValidation();
+    if(state.seconds>0) startTimer();
+  }
+}
+
+function topBar(){
+  return `
+    <div class="card">
+      <div class="row">
+        <div><b>Round ${state.round}/${state.maxRounds}</b><br><span class="small">${state.category} · ${state.difficulty}</span></div>
+        <div style="text-align:right">
+          <button class="ghost" onclick="toggleSound()">${state.sound ? "Sound On" : "Sound Off"}</button>
+          <button class="ghost" onclick="renderSetup()">Main Menu</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function acroBlock(){
+  return `
+    <div class="card acroBox">
+      <div class="categoryBadge">${state.category}</div>
+      <div class="acro">${state.acro.join(" ")}</div>
+    </div>
+  `;
+}
+
+function roundIntro(){
+  return acroBlock() + `
+    <div class="card winnerSplash">
+      <h2>Round ${state.round}</h2>
+      <p>Get ready. Make the funniest phrase that matches the acronym.</p>
+      <button onclick="state.phase='submitPass';state.currentPlayer=0;render();beep()">Start Submissions</button>
+    </div>
+  `;
+}
+
+function submitPass(){
+  const p = state.players[state.currentPlayer];
+
+  if(isAIPlayer(p)){
+    state.submissions.push({player:p,text:generateAIAnswer(state.acro)});
+    setTimeout(()=>nextSubmitter(),10);
+    return '<div class="card"><h2>'+p+' is thinking...</h2></div>';
+  }
+  return acroBlock() + `
+    <div class="card pass">
+      <div class="small">Pass the device to</div>
+      <div class="bigName">${escapeHtml(p)}</div>
+      <p>Do not let anyone else see the screen.</p>
+      <button onclick="state.phase='submit';state.timeLeft=state.seconds;render();beep()">Start Turn</button>
+    </div>
+  `;
+}
+
+function submitScreen(){
+  const p = state.players[state.currentPlayer];
+  return acroBlock() + `
+    <div class="card">
+      <h2>${escapeHtml(p)}, enter your answer</h2>
+      ${state.seconds>0 ? `<div id="timer" class="timer ${state.timeLeft<=5?'low':''}">${state.timeLeft}</div>` : ""}
+      <textarea id="answer" placeholder="Example: Definitely Not Finishing" oninput="updateValidation()"></textarea>
+      <div id="validation" class="validationBox"></div>
+      <button id="submitBtn" onclick="submitAnswer()" disabled>Lock It In</button>
+      <button class="ghost" onclick="skipAnswer()">Skip</button>
+      <p class="small">Your phrase should use the letters in order: ${state.acro.join(" ")}</p>
+    </div>
+  `;
+}
+
+function submitAnswer(){
+  const txt = $("answer").value.trim();
+  if(!txt) return;
+  const check = validateAnswer(txt);
+  if(!check.valid){
+    alert("Your answer must match the acronym before it can be submitted.");
+    return;
+  }
+  state.submissions.push({player:state.players[state.currentPlayer], text:txt});
+  nextSubmitter();
+}
+
+function skipAnswer(){
+  state.submissions.push({player:state.players[state.currentPlayer], text:"[No answer submitted]"});
+  nextSubmitter();
+}
+
+function nextSubmitter(){
+  stopTimer();
+  beep();
+  state.currentPlayer++;
+  if(state.currentPlayer >= state.players.length){
+    shuffle(state.submissions);
+    state.currentPlayer = 0;
+    state.phase = "votePass";
+  } else {
+    state.phase = "submitPass";
+  }
+  render();
+}
+
+
+function scoreAnswerForAI(text){
+  if(!text || text === "[No answer submitted]") return -999;
+  let score = 0;
+  const lower = text.toLowerCase();
+  const words = text.split(/\s+/).filter(Boolean);
+
+  score += Math.min(words.length, 8);
+  if(/[!?]/.test(text)) score += 1;
+  if(lower.includes("not") || lower.includes("never") || lower.includes("definitely")) score += 2;
+  if(lower.includes("fuel") || lower.includes("racing") || lower.includes("jury") || lower.includes("objection")) score += 2;
+  if(lower.includes("pizza") || lower.includes("monkey") || lower.includes("burrito") || lower.includes("chaos")) score += 1;
+  if(text.length < 8) score -= 3;
+
+  return score + Math.random() * 2;
+}
+
+function aiChooseVote(aiName){
+  const options = state.submissions
+    .map((s,i)=>({s,i,score:scoreAnswerForAI(s.text)}))
+    .filter(x => x.s.player !== aiName && x.s.text !== "[No answer submitted]");
+
+  if(!options.length) return null;
+
+  const skill = state.aiSkill || "Normal";
+  const roll = Math.random();
+
+  if(skill === "Easy"){
+    return options[Math.floor(Math.random()*options.length)].i;
+  }
+
+  if(skill === "Chaos"){
+    if(roll < 0.55){
+      return options[Math.floor(Math.random()*options.length)].i;
+    }
+    options.sort((a,b)=>a.score-b.score);
+    return options[0].i;
+  }
+
+  // Normal: usually favors stronger answers, sometimes random.
+  if(roll < 0.70){
+    options.sort((a,b)=>b.score-a.score);
+    const top = options.slice(0, Math.min(2, options.length));
+    return top[Math.floor(Math.random()*top.length)].i;
+  }
+
+  return options[Math.floor(Math.random()*options.length)].i;
+}
+
+function castAIVote(aiName){
+  const pick = aiChooseVote(aiName);
+  if(pick !== null && pick !== undefined){
+    state.votes[aiName] = pick;
+  }
+}
+
+function votePass(){
+  const p = state.players[state.currentPlayer];
+
+  if(isAIPlayer(p)){
+    castAIVote(p);
+    state.currentPlayer++;
+    if(state.currentPlayer >= state.players.length){
+      scoreRound();
+      state.revealStep=0;
+      state.phase='reveal';
+      state.currentPlayer=0;
+    }
+    setTimeout(()=>render(),120);
+    return '<div class="card"><h2>'+escapeHtml(p)+' is voting...</h2></div>';
+  }
+  return acroBlock() + `
+    <div class="card pass">
+      <div class="small">Pass the device to</div>
+      <div class="bigName">${escapeHtml(p)}</div>
+      <p>Vote for the funniest answer. You cannot vote for your own.</p>
+      <button onclick="state.phase='vote';render();beep()">Start Voting</button>
+    </div>
+  `;
+}
+
+function voteScreen(){
+  const p = state.players[state.currentPlayer];
+
+  if(!state.voteOrders) state.voteOrders = {};
+  if(!state.voteOrders[p]){
+    let order = state.submissions.map((_,i)=>i);
+    for(let i=order.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [order[i],order[j]]=[order[j],order[i]];
+    }
+    state.voteOrders[p]=order;
+  }
+
+  let answers = state.voteOrders[p].map((idx,pos)=>{
+    const s = state.submissions[idx];
+    const disabled = s.player===p || s.text==="[No answer submitted]";
+    return `
+      <div class="answerCard">
+        <div class="answerText">${String.fromCharCode(65+pos)}) ${escapeHtml(s.text)}</div>
+        <button ${disabled ? "disabled" : ""} onclick="castVote(${idx})">${disabled ? "Your answer" : "Vote for this"}</button>
+      </div>
+    `;
+  }).join("");
+  return acroBlock() + `
+    <div class="card">
+      <h2>${escapeHtml(p)}, vote now</h2>
+      ${answers}
+    </div>
+  `;
+}
+
+function castVote(i){
+  state.votes[state.players[state.currentPlayer]] = i;
+  beep();
+  state.currentPlayer++;
+  if(state.currentPlayer >= state.players.length){
+    scoreRound();
+    state.revealStep = 0;
+    state.phase = "reveal";
+    state.currentPlayer = 0;
+  }else{
+    state.phase = "votePass";
+  }
+  render();
+}
+
+function scoreRound(){
+  const counts = Array(state.submissions.length).fill(0);
+  Object.values(state.votes).forEach(i=>counts[i]++);
+  counts.forEach((c,i)=>{
+    const p = state.submissions[i].player;
+    state.scores[p] += c;
+    state.stats[p].votes += c;
+  });
+
+  let maxVotes = Math.max(...counts);
+  let winners = counts.map((c,i)=>({c,i})).filter(x=>x.c===maxVotes && x.c>0);
+  let winner = null;
+  if(winners.length===1){
+    winner = winners[0].i;
+    const p = state.submissions[winner].player;
+    state.scores[p] += 2;
+    state.stats[p].wins++;
+    const possibleVotes = state.players.length - 1;
+    if(maxVotes >= possibleVotes){
+      state.scores[p] += 1;
+      state.stats[p].sweeps++;
+    }
+    addHall(state.acro.join(""), state.submissions[winner].text, p, maxVotes);
+  }
+  state.roundResult = {counts,winner,comment:comments[Math.floor(Math.random()*comments.length)]};
+}
+
+
+function revealScreen(){
+  const rr = state.roundResult;
+
+  if(rr.winner === null){
+    return `
+      <div class="card winnerSplash">
+        <h2>No clear winner</h2>
+        <button onclick="state.phase='results';render()">Show Results</button>
+      </div>
+    `;
+  }
+
+  const w = state.submissions[rr.winner];
+
+  if(state.revealStep === 0){
+    return `
+      <div class="card winnerSplash revealStage">
+        <h1>🏆 ROUND WINNER 🏆</h1>
+        <p>Prepare for the reveal...</p>
+        <button onclick="state.revealStep=1;render()">Reveal Answer</button>
+      </div>
+    `;
+  }
+
+  if(state.revealStep === 1){
+    return `
+      <div class="card winnerSplash revealStage">
+        <h1>🏆 ROUND WINNER 🏆</h1>
+        <div class="revealBig">"${escapeHtml(w.text)}"</div>
+        <button onclick="state.revealStep=2;render()">Reveal Player</button>
+      </div>
+    `;
+  }
+
+  beep("win");
+  return `
+    <div class="card winnerSplash revealStage">
+      <h1>🏆 ROUND WINNER 🏆</h1>
+      <div class="revealBig">"${escapeHtml(w.text)}"</div>
+      <h2>Submitted by ${escapeHtml(w.player)}</h2>
+      <p class="notice">${escapeHtml(rr.comment)}</p>
+      <button onclick="state.phase='results';render()">Show Full Results</button>
+    </div>
+  `;
+}
+
+
+function resultsScreen(){
+  const rr = state.roundResult;
+  const ranked = rr.counts.map((c,i)=>({c,i})).sort((a,b)=>b.c-a.c);
+  let winnerHtml = "";
+  if(rr.winner !== null){
+    const w = state.submissions[rr.winner];
+    winnerHtml = `
+      <div class="card winnerSplash">
+        <h2>Round Winner</h2>
+        <div class="winnerQuote">"${escapeHtml(w.text)}"</div>
+        <p>Submitted by <b>${escapeHtml(w.player)}</b></p>
+        <p class="notice">${escapeHtml(rr.comment)}</p>
+      </div>
+    `;
+    beep("win");
+  }else{
+    winnerHtml = `<div class="card winnerSplash"><h2>No clear winner</h2><p class="notice">A tie at the top. No bonus awarded.</p></div>`;
+  }
+  return acroBlock() + winnerHtml + `
+    <div class="card">
+      <h3>Full Results</h3>
+      ${ranked.map(r=>`
+        <div class="answerCard">
+          <div class="answerText">${escapeHtml(state.submissions[r.i].text)}</div>
+          <div class="small">${r.c} vote${r.c===1?"":"s"} · ${escapeHtml(state.submissions[r.i].player)}</div>
+        </div>
+      `).join("")}
+      <button onclick="state.phase='scoreboard';render()">Continue</button>
+    </div>
+  `;
+}
+
+function scoreboardScreen(){
+  return `
+    <div class="card">
+      <h2>Scoreboard</h2>
+      ${scoreTable()}
+      <div class="footerActions">
+        <button onclick="nextRound()">Next Round</button>
+        <button class="ghost" onclick="showHall()">Hall of Fame</button>
+      </div>
+    </div>
+  `;
+}
+
+function nextRound(){
+  state.round++;
+  if(state.round > state.maxRounds){
+    state.phase = "gameover";
+  }else{
+    state.acro = generateAcronym();
+    state.phase = "roundIntro";
+    state.currentPlayer = 0;
+    state.submissions = [];
+    state.votes = {};
+    state.voteOrders = {};
+    state.roundResult = null;
+    state.timeLeft = state.seconds;
+  }
+  render();
+}
+
+function gameOverScreen(){
+  const ranked = Object.entries(state.scores).sort((a,b)=>b[1]-a[1]);
+  const champ = ranked[0];
+  return `
+    <div class="card winnerSplash">
+      <h1>ACROPHOBIA CHAMPION</h1>
+      <div class="winnerQuote">${escapeHtml(champ[0])}</div>
+      <h2>${champ[1]} points</h2>
+    </div>
+    <div class="card">
+      <h2>Final Standings</h2>
+      ${scoreTable()}
+    </div>
+    <div class="card">
+      <h2>Game Stats</h2>
+      <div class="grid3">
+        ${state.players.map(p=>`
+          <div class="stat">
+            <b>${escapeHtml(p)}</b>
+            Votes: ${state.stats[p].votes}<br>
+            Round Wins: ${state.stats[p].wins}<br>
+            Sweeps: ${state.stats[p].sweeps}
+          </div>
+        `).join("")}
+      </div>
+      <button onclick="clearSave()">New Game</button>
+      <button class="ghost" onclick="showHall()">Hall of Fame</button>
+    </div>
+  `;
+}
+
+function scoreTable(){
+  const ranked = Object.entries(state.scores).sort((a,b)=>b[1]-a[1]);
+  return `<table class="table"><tr><th>Player</th><th>Score</th><th>Wins</th><th>Total Votes</th></tr>
+    ${ranked.map(([p,s])=>`<tr><td>${escapeHtml(p)}</td><td>${s}</td><td>${state.stats[p].wins}</td><td>${state.stats[p].votes}</td></tr>`).join("")}
+  </table>`;
+}
+
+
+function validateAnswer(text){
+  const words = text
+    .trim()
+    .split(/\s+/)
+    .map(w => w.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g,""))
+    .filter(Boolean);
+
+  const letters = state.acro || [];
+  const rows = letters.map((letter,i)=>{
+    const word = words[i] || "";
+    const good = word && word[0] && word[0].toUpperCase() === String(letter).toUpperCase();
+    return {letter, word, good};
+  });
+
+  return {
+    rows,
+    valid: rows.length > 0 && rows.every(r=>r.good) && words.length >= letters.length,
+    extraWords: words.slice(letters.length)
+  };
+}
+
+function updateValidation(){
+  const box = $("validation");
+  const input = $("answer");
+  if(!box || !input) return;
+
+  const text = input.value.trim();
+  if(!text){
+    box.innerHTML = `<div class="validationHint">Start typing to check your answer against ${state.acro.join(" ")}.</div>`;
+    const btn = $("submitBtn");
+    if(btn) btn.disabled = true;
+    return;
+  }
+
+  const check = validateAnswer(text);
+  let html = check.rows.map(r=>`
+    <div class="validationRow ${r.good ? "good" : "bad"}">
+      <div class="validationLetter">${escapeHtml(r.letter)}</div>
+      <div>
+        <div class="validationWord">${r.word ? escapeHtml(r.word) : "Missing word"}</div>
+        <div class="validationHint">${r.good ? "Matches" : "Needs a word starting with " + escapeHtml(r.letter)}</div>
+      </div>
+    </div>
+  `).join("");
+
+  if(check.extraWords.length){
+    html += `<div class="validationHint" style="margin-top:8px">Extra words are okay: ${escapeHtml(check.extraWords.join(" "))}</div>`;
+  }
+
+  html += `<div class="validStatus ${check.valid ? "good" : "bad"}">${check.valid ? "✅ Ready to Submit" : "❌ Not valid yet"}</div>`;
+  box.innerHTML = html;
+
+  const btn = $("submitBtn");
+  if(btn) btn.disabled = !check.valid;
+}
+
+function startTimer(){
+  stopTimer();
+  tickHandle = setInterval(()=>{
+    state.timeLeft--;
+    const t = $("timer");
+    if(t){
+      t.textContent = state.timeLeft;
+      if(state.timeLeft<=5){t.classList.add("low");beep("low");}
+    }
+    if(state.timeLeft<=0){
+      stopTimer();
+      const ans = $("answer");
+      const txt = ans ? ans.value.trim() : "";
+      const check = txt ? validateAnswer(txt) : {valid:false};
+      if(check.valid){
+        state.submissions.push({player:state.players[state.currentPlayer], text:txt});
+      } else {
+        state.submissions.push({player:state.players[state.currentPlayer], text:"[No answer submitted]"});
+      }
+      nextSubmitter();
+    }
+  },1000);
+}
+
+function stopTimer(){
+  if(tickHandle){clearInterval(tickHandle);tickHandle=null;}
+}
+
+function toggleSound(){
+  state.sound = !state.sound;
+  save();
+  render();
+}
+
+function showHall(){
+  stopTimer();
+  const hall = JSON.parse(localStorage.getItem("acroHall") || "[]");
+  $("app").innerHTML = `
+    <div class="card">
+      <h2>Hall of Fame</h2>
+      ${hall.length ? hall.map(h=>`
+        <div class="answerCard">
+          <div class="small">${escapeHtml(h.acro)} · ${h.votes} vote${h.votes===1?"":"s"}</div>
+          <div class="answerText">"${escapeHtml(h.text)}"</div>
+          <div class="small">by ${escapeHtml(h.player)}</div>
+        </div>
+      `).join("") : "<p>No winners saved yet.</p>"}
+      <button onclick="state.phase?render():renderSetup()">Back</button>
+      <button class="danger" onclick="localStorage.removeItem('acroHall');showHall()">Clear Hall</button>
+    </div>
+  `;
+}
+
+function addHall(acro,text,player,votes){
+  const hall = JSON.parse(localStorage.getItem("acroHall") || "[]");
+  hall.unshift({acro,text,player,votes,date:new Date().toISOString()});
+  localStorage.setItem("acroHall", JSON.stringify(hall.slice(0,25)));
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+}
+
+renderSetup();
+</script>
+</body>
+</html>
